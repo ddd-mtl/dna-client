@@ -1,15 +1,17 @@
 # lit-happ
 
-**Compatible with:**
-- **HDK v0.1.0** & **HDI v0.2.0**
-- **@holochain/client v0.12.0**
+A MVVM framework for building holochain apps web-UI with Lit.
 
-A MVVM framework for building holochain apps web UI with Lit.
-
-Composed of two packages:
+The framework is composed of 3 main packages:
  - [cell-proxy](packages/cell-proxy): Defines Conductor and Cell Proxy classes for using a holochain conductor.
- - [lit-happ](packages/lit-happ): The main framework that defines ViewModels and helper Elements for using them.
+ - [lit-happ](packages/lit-happ): The main package that defines ViewModels and base class Elements for using them in custom LitElements.
+ - [we-utils](packages/we-utils): Helpers for making a Moss/Weave version of the happ made with lit-happ.
 
+ 
+
+Extra packages:
+- [notifications-dvm](packages/notifications-dvm): Defines bindings and ViewModels for the [notification zome](https://github.com/holochain-open-dev/notifications)
+- [profiles-dvm](packages/notifications-dvm): Defines bindings and ViewModels for the [profiles zome](https://github.com/holochain-open-dev/profiles)
 
 
 # Playgrounds
