@@ -7,6 +7,7 @@
     "packages/lit-happ",
     "packages/notifications-dvm",
     "packages/profiles-dvm",
+    "packages/shared-ownership-dvm",
     "packages/we-utils"
   ],
   "scripts": {
@@ -19,12 +20,13 @@
     "install:submodules"    : "bash scripts/install-submodules.sh 0.4.0-dev.20",
     "install:zits"          : "cargo install zits --version 1.15.0",
 
+    "build:shared"          : "bash scripts/ts-bindings.sh && npm run build -w packages/shared-ownership-dvm",
     "build:notifications"   : "bash scripts/ts-bindings.sh && npm run build -w packages/notifications-dvm",
     "build:profiles"        : "bash scripts/ts-bindings.sh && npm run build -w packages/profiles-dvm",
     "build:happ"            : "npm run build:happ -w example && npm run build:happ:clone -w example && bash scripts/ts-bindings-example.sh",
 
     "build:cell"            : "bash scripts/ts-bindings.sh && npm run build -w packages/cell-proxy",
-    "build:libs"            : "npm run build:cell && npm run build -w packages/lit-happ && npm run build -w packages/we-utils && npm run build:profiles && npm run build:notifications",
+    "build:libs"            : "npm run build:cell && npm run build -w packages/lit-happ && npm run build -w packages/we-utils && npm run build:profiles && npm run build:notifications && npm run build:shared",
 
     "start"                 : "npm run start -w example",
     "start:clone"           : "npm run start:clone -w example",
