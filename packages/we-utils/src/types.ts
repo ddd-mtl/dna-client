@@ -1,7 +1,7 @@
 import {
     AppletClients,
     CreatableName,
-    CrossAppletView,
+    CrossGroupView,
     RecordInfo,
     RenderInfo,
     WeaveServices
@@ -39,8 +39,8 @@ export type AppletViewInfo = {
     groupProfiles: GroupProfile[];
 };
 export type CrossViewInfo = {
-    type: 'cross-applet-view';
-    view: CrossAppletView;
+    type: 'cross-group-view';
+    view: CrossGroupView;
     applets: ReadonlyMap<EntryHash, AppletClients>;
 };
 

@@ -19,6 +19,7 @@ fi
 branchname=hdk-${hcversion:2}
 echo Getting branch: $branchname
 profileHdkVersion=for-hdk-v0.4.0-dev.16
+#profileHdkVersion=0.400.0-rc.0
 
 echo \* Create 'submodules' folder
 rm -rf submodules
