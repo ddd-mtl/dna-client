@@ -33,3 +33,8 @@ sed -i "s/\"version\": \"$OLD_VER\"/\"version\": \"$1\"/" ./packages/notificatio
 OLD_VER=`awk -F ":" '/"version"/ {print $2}' ./packages/we-utils/package.json | sed 's/"//g' | sed 's/,//g' | sed 's/ //g'`
 echo "./packages/we-utils/package.json $OLD_VER -> $1"
 sed -i "s/\"version\": \"$OLD_VER\"/\"version\": \"$1\"/" ./packages/we-utils/package.json
+
+# Change shared-ownership-dvm/package.json
+OLD_VER=`awk -F ":" '/"version"/ {print $2}' ./packages/shared-ownership-dvm/package.json | sed 's/"//g' | sed 's/,//g' | sed 's/ //g'`
+echo "./packages/shared-ownership-dvm/package.json $OLD_VER -> $1"
+sed -i "s/\"version\": \"$OLD_VER\"/\"version\": \"$1\"/" ./packages/shared-ownership-dvm/package.json
