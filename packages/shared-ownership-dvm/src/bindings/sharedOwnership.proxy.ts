@@ -111,6 +111,10 @@ export class SharedOwnershipProxy extends ZomeProxy {
     return this.callBlocking('send_shared_key', input);
   }
 
+  async recvSharedKey(input: RecvKeyInput): Promise<void> {
+    return this.call('recv_shared_key', input);
+  }
+
   async requestSharedKey(input: RequestKeyInput): Promise<void> {
     return this.call('request_shared_key', input);
   }

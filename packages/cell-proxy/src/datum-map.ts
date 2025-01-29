@@ -8,18 +8,17 @@ import {
 export enum DatumValidity {
   None = "None",
   Self = "Self",
-  Network = "Network",
+  Network = "Network",  // Received all required validation receipts from peers
 }
 
 
 /** */
 export enum DatumStorageLocations {
   None = 0,
-  Memory = 1 << 0,
-  Disk = 1 << 1,
-  SourceChain = 1 << 2,
-  Cache = 1 << 3,
-  Dht = 1 << 4,
+  WebApp = 1 << 0,      // RAM (webapp live data)
+  Host = 1 << 2,        // store in host's cache/storage system (ex: Moss)
+  SourceChain = 1 << 2, // stored in local source-chain
+  Dht = 1 << 3,         // stored in local DHT storage?
 }
 
 
@@ -33,7 +32,7 @@ export class DatumMap<K extends HoloHashB64, V> {
     this._map = new Map();
     if (initialEntries) {
       for (const [key, value] of initialEntries) {
-        this.set(key, value, DatumValidity.None, DatumStorageLocations.Memory);
+        this.set(key, value, DatumValidity.None, DatumStorageLocations.WebApp);
       }
     }
   }

@@ -1,11 +1,32 @@
 import {SignalCb, EntryVisibility, Timestamp, ZomeIndex, Signal, SignalType, AppSignal} from "@holochain/client";
 import {
   ActionId,
-  AgentId, LinkableId, anyToB64, enc64, EntryId,
-  EntryPulse, getIndexByVariant, intoLinkableId, LinkPulse, prettyDate, prettyState, SignalLog, AppSignalType, StateChange,
-  TipProtocol, TipProtocolVariantApp, TipProtocolVariantEntry, TipProtocolVariantLink,
-  ZomeSignal, ZomeSignalProtocol,
-  ZomeSignalProtocolType, ZomeSignalProtocolVariantEntry, ZomeSignalProtocolVariantLink, TipProtocolType, intoAnyId
+  AgentId,
+  LinkableId,
+  anyToB64,
+  enc64,
+  EntryId,
+  EntryPulse,
+  getIndexByVariant,
+  intoLinkableId,
+  LinkPulse,
+  prettyDate,
+  prettyState,
+  SignalLog,
+  AppSignalType,
+  StateChange,
+  TipProtocol,
+  TipProtocolVariantApp,
+  TipProtocolVariantEntry,
+  TipProtocolVariantLink,
+  ZomeSignal,
+  ZomeSignalProtocol,
+  ZomeSignalProtocolType,
+  ZomeSignalProtocolVariantEntry,
+  ZomeSignalProtocolVariantLink,
+  TipProtocolType,
+  intoAnyId,
+  ValidatedBy
 } from "@ddd-qc/cell-proxy";
 import {ZomeViewModel} from "./ZomeViewModel";
 import {decode} from "@msgpack/msgpack";
@@ -208,6 +229,7 @@ export interface EntryPulseMat {
   origAh: ActionId | null,
   ah: ActionId,
   state: string,
+  validatedBy: ValidatedBy,
   isNew: boolean,
   ts: Timestamp,
   author: AgentId,
@@ -226,6 +248,7 @@ export function materializeEntryPulse(entryPulse: EntryPulse, entryTypes: string
     origAh: entryPulse.orig_ah? new ActionId(entryPulse.orig_ah) : null,
     ah: new ActionId(entryPulse.ah),
     state: stateStr,
+    validatedBy: entryPulse.validation,
     isNew: (entryPulse.state as any)[stateStr],
     ts: entryPulse.ts,
     author: new AgentId(entryPulse.author),
@@ -247,6 +270,7 @@ export function dematerializeEntryPulse(pulse: EntryPulseMat, entryTypes: string
   let res: EntryPulse = {
     ah: pulse.ah.hash,
     state: state as StateChange,
+    validation: pulse.validatedBy,
     ts: pulse.ts,
     author: pulse.author.hash,
     eh: pulse.eh.hash,
@@ -276,6 +300,7 @@ export interface LinkPulseMat {
   create_link_hash: ActionId,
   /** */
   state: string,
+  validatedBy: ValidatedBy,
   isNew: Boolean,
 }
 
@@ -293,6 +318,7 @@ export function materializeLinkPulse(linkPulse: LinkPulse, linkTypes: string[]):
     tag: linkPulse.link.tag,
     create_link_hash: new ActionId(linkPulse.link.create_link_hash),
     state: Object.keys(linkPulse.state)[0]!,
+    validatedBy: linkPulse.validation,
     isNew: (linkPulse.state as any)[stateStr],
   }
 }
@@ -306,6 +332,7 @@ export function dematerializeLinkPulse(pulse: LinkPulseMat, linkTypes: string[])
   /** */
   return {
     state: state as StateChange,
+    validation: pulse.validatedBy,
     link: {
       author: pulse.author.hash,
       base:  pulse.base.hash,

@@ -77,6 +77,13 @@ export interface CastTipInput {
   peers: AgentArray[]
 }
 
+/** ValidationStatus */
+export enum ValidatedBy {
+	None = 'None',
+	Me = 'Me',
+	Network = 'Network',
+}
+
 /** Bool: True if state change just happened (real-time) */
 export enum StateChangeType {
 	Create = 'Create',
@@ -89,13 +96,16 @@ export type StateChangeVariantDelete = {Delete: boolean}
 export type StateChange = 
  | StateChangeVariantCreate | StateChangeVariantUpdate | StateChangeVariantDelete;
 
+/**  */
 export interface LinkPulse {
   link: Link
   state: StateChange
+  validation: ValidatedBy
 }
 
 export interface EntryPulse {
   state: StateChange
+  validation: ValidatedBy
   orig_ah?: ActionArray
   ah: ActionArray
   eh: EntryArray

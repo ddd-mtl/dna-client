@@ -17,7 +17,7 @@
 
     "postinstall"           : "mkdir -p artifacts",
 
-    "install:submodules"    : "bash scripts/install-submodules.sh 0.4.0-dev.20",
+    "install:submodules"    : "bash scripts/install-submodules.sh 0.4.1",
     "install:zits"          : "cargo install zits --version 1.16.4",
 
     "build:shared"          : "bash scripts/ts-bindings.sh && npm run build -w packages/shared-ownership-dvm",

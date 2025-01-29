@@ -14,6 +14,7 @@ export const sharedOwnershipFunctionNames: FunctionName[] = [
 	"probe_owners",
 	"create_shared_key",
 	"send_shared_key",
+	"recv_shared_key",
 	"request_shared_key",
 	"query_shared_keys",
 	"offer_ownership",

@@ -34,7 +34,7 @@
     "@ddd-qc/lit-happ": "file:../lit-happ",
     "@holochain-open-dev/profiles": "=0.400.0-rc.0",
     "@holochain/client": "=0.18.0-rc.1",
-    "@theweave/api": "=0.4.0-alpha.0",
+    "@theweave/api": "=0.4.0-alpha.3",
     "@mdi/js": "^7.2.0"
   },
   "engines": {
