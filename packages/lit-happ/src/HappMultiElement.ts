@@ -31,7 +31,12 @@ export class HappMultiElement extends LitElement {
   get count(): number {return this.hvms.length}
 
   /** Ctor */
-  protected constructor(appInfo: [number | AppWebsocket, InstalledAppId | undefined][], adminUrl?: URL, defaultTimeout?: number) {
+  protected constructor(
+    appInfo: [number | AppWebsocket, InstalledAppId | undefined][],
+    public readonly isMainView: boolean,
+    adminUrl?: URL,
+    defaultTimeout?: number,
+    ) {
     super();
     /* await */ this.constructHvms(appInfo, adminUrl, defaultTimeout);
   }
@@ -60,7 +65,7 @@ export class HappMultiElement extends LitElement {
         /** Override appId */
         hvmDef.id = appId;
       }
-      const hvm = await HappViewModel.new(this, appProxy, hvmDef, false);
+      const hvm = await HappViewModel.new(this, appProxy, hvmDef, this.isMainView);
       await hvm.authorizeAllZomeCalls(appProxy.adminWs);
 
       this.hvms.push([appProxy, hvm]);
