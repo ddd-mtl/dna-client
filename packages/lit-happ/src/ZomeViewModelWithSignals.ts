@@ -93,9 +93,9 @@ export abstract class ZomeViewModelWithSignals extends ZomeViewModel {
         const entryPulseMat = materializeEntryPulse(pulse.Entry as EntryPulse, (this.constructor as typeof ZomeViewModel).ENTRY_TYPES);
         all.push(this.handleEntryPulse(entryPulseMat, from));
         /** If new entry from this agent, broadcast to peers as tip */
-        if (entryPulseMat.isNew && this.cell.address.agentId.equals(from) && entryPulseMat.visibility == "Public") {
-          all.push(this.broadcastTip({Entry: pulse.Entry as EntryPulse}));
-        }
+          if (entryPulseMat.isNew && this.cell.address.agentId.equals(from) && entryPulseMat.visibility == "Public") {
+            all.push(this.broadcastTip({Entry: pulse.Entry as EntryPulse}));
+          }
         continue;
       }
       if (ZomeSignalProtocolType.Link in pulse) {
@@ -134,6 +134,10 @@ export abstract class ZomeViewModelWithSignals extends ZomeViewModel {
 
   /** */
   async broadcastTip(tip: TipProtocol, agents?: Array<AgentId>): Promise<void> {
+    /** Only MainView can cast tips */
+    if (!this.isMainView) {
+      return;
+    }
     agents = agents? agents : this._dvmParent.livePeers;
     /** Skip if no recipients or sending to self only */
     const filtered = agents.filter((key) => key.b64 != this.cell.address.agentId.b64);
