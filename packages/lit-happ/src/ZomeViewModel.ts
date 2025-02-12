@@ -12,7 +12,7 @@ import {SignalCb, ZomeName, Signal, SignalType} from "@holochain/client";
 import {AppSignal} from "@holochain/client/lib/api/app/types";
 import {DnaViewModel} from "./DnaViewModel";
 
-export type ZvmConstructor = {new(proxy: CellProxy, dvmParent: DnaViewModel, zomeName?: ZomeName): ZomeViewModel} /*& typeof ZomeSpecific;*/
+export type ZvmConstructor = {new(proxy: CellProxy, dvmParent: DnaViewModel, isMainView: boolean, zomeName?: ZomeName): ZomeViewModel} /*& typeof ZomeSpecific;*/
 
 /** (EXPERIMENTAL) Class Decorator */
 export function zvm(zProxyCtor: typeof ZomeProxy) {
@@ -64,8 +64,8 @@ export abstract class ZomeViewModel extends CellMixin(ViewModel) {
 
 
     /** Ctor */
-    constructor(cellProxy: CellProxy, dvmParent: DnaViewModel, zomeName?: ZomeName) {
-        super();
+    constructor(cellProxy: CellProxy, dvmParent: DnaViewModel, isMainView: boolean, zomeName?: ZomeName) {
+        super(isMainView);
         this._dvmParent = dvmParent;
         const zProxyCtor = this.getProxyConstructor();
         if (!zProxyCtor) {

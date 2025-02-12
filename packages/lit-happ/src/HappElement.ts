@@ -63,7 +63,7 @@ export class HappElement extends LitElement {
       hvmDef.id = appId;
     }
     this.appProxy = await ConductorAppProxy.new(port_or_socket, hvmDef.id, adminUrl, defaultTimeout);
-    this.hvm = await HappViewModel.new(this, this.appProxy, hvmDef);
+    this.hvm = await HappViewModel.new(this, this.appProxy, hvmDef, true);
     /** FIXME: wait for genesis to finish first? */
     await this.hvm.authorizeAllZomeCalls(this.appProxy.adminWs);
     await this.hvmConstructed();

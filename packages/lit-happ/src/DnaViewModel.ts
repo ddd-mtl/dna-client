@@ -31,7 +31,7 @@ interface IDnaViewModel {
 }
 
 export type DvmConstructor = typeof RoleSpecific & {DNA_MODIFIERS: DnaModifiersOptions} & {
-  new(host: ReactiveElement, proxy: AppProxy, idOrHcl: HCL | InstalledAppId): DnaViewModel;
+  new(host: ReactiveElement, proxy: AppProxy, idOrHcl: HCL | InstalledAppId, isMainView: boolean): DnaViewModel;
 };
 
 
@@ -65,8 +65,8 @@ export abstract class DnaViewModel extends CellMixin(RoleMixin(ViewModel)) imple
 
 
   /** Ctor */
-  constructor(public readonly host: ReactiveElement, appProxy: AppProxy, idOrHcl: HCL | InstalledAppId) {
-    super();
+  constructor(public readonly host: ReactiveElement, appProxy: AppProxy, idOrHcl: HCL | InstalledAppId, isMainView: boolean) {
+    super(isMainView);
     if (typeof idOrHcl === 'object') {
       this.baseRoleName = idOrHcl.baseRoleName;
       this.hcl = idOrHcl;
@@ -85,9 +85,9 @@ export abstract class DnaViewModel extends CellMixin(RoleMixin(ViewModel)) imple
     for (const zvmDef of zvmDefs) {
       let zvm: ZomeViewModel;
       if (Array.isArray(zvmDef)) {
-        zvm = new zvmDef[0](this._cellProxy, this, zvmDef[1]);
+        zvm = new zvmDef[0](this._cellProxy, this, isMainView, zvmDef[1]);
       } else {
-        zvm = new zvmDef(this._cellProxy, this);
+        zvm = new zvmDef(this._cellProxy, this, isMainView);
       }
       // TODO check zvm.zomeName exists in _cellProxy
       this._zomeViewModels[zvm.zomeName] = zvm;

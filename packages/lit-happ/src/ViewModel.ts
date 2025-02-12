@@ -26,6 +26,10 @@ import { Mutex } from 'async-mutex';
  */
  export abstract class ViewModel {
 
+  constructor(public readonly isMainView: boolean) {
+    // N/A
+  }
+
   /** -- Fields -- */
   protected _previousPerspective?: unknown;
   protected _providedHosts: [ReactiveControllerHost, PropertyKey][] = [];
@@ -35,8 +39,6 @@ import { Mutex } from 'async-mutex';
 
   //protected _initializationState: InitializationState = InitializationState.Uninitialized;
 
-
-  protected _probeMutex = new Mutex();
 
   /** -- Abstract fields -- */
 
@@ -65,6 +67,7 @@ import { Mutex } from 'async-mutex';
    * Mutex wrapping of probeAllInner: Don't call probeAll() during a probeAll()
    * Should not be async as we expect this to be long, so happs are expected to use signals instead if something changed.
    */
+  protected _probeMutex = new Mutex();
   probeAll(): void {
     // if (this._initializationState !== InitializationState.Initialized) {
     //   console.warn("probeAll() called on unitialized ViewModel");

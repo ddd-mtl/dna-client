@@ -78,7 +78,7 @@ export class HappViewModel {
   /** -- Create -- */
 
   /** Spawn a HappViewModel for an AppId running on the AppProxy */
-  static async new(host: ReactiveElement, appProxy: AppProxy, hvmDef: HvmDef): Promise<HappViewModel> {
+  static async new(host: ReactiveElement, appProxy: AppProxy, hvmDef: HvmDef, isMainView: boolean): Promise<HappViewModel> {
     const appId = appProxy.appIdOfShame? appProxy.appIdOfShame : hvmDef.id;
     //console.log("HappViewModel.new()", hvmDef.id, appId)
     /** Create all Cell Proxies in the definition */
@@ -93,7 +93,7 @@ export class HappViewModel {
       const hcl = new HCL(appId, baseRoleName);
       appProxy.createCellProxy(hcl);
     }
-    const hvm = new HappViewModel(host, appProxy, hvmDef);
+    const hvm = new HappViewModel(host, appProxy, hvmDef, isMainView);
     return hvm;
   }
 
@@ -103,6 +103,7 @@ export class HappViewModel {
     protected _host: ReactiveElement, /* VIEW */
     protected _appProxy: AppProxy, /* MODEL */
     hvmDef: HvmDef, /* VIEW-MODEL definition */
+    public readonly isMainView: boolean,
   ) {
     this.appId = this._appProxy.appIdOfShame? this._appProxy.appIdOfShame : hvmDef.id;
     /** Create all non-deferred DVMs for this Happ */
@@ -145,7 +146,7 @@ export class HappViewModel {
 
   /** */
   private createDvm(dvmDef: DvmDef, hcl: HCL): DnaViewModel {
-    const dvm: DnaViewModel = new dvmDef.ctor(this._host, this._appProxy, hcl); // WARN this can throw an error
+    const dvm: DnaViewModel = new dvmDef.ctor(this._host, this._appProxy, hcl, this.isMainView); // WARN this can throw an error
     //console.log(`  createDvm() for "${hcl.toString()}" ; cellId: ${CellIdStr(dvm.cellId)}`);
     /** Setup signalHandler */
     if (dvm.signalHandler) {

@@ -60,7 +60,7 @@ export class HappMultiElement extends LitElement {
         /** Override appId */
         hvmDef.id = appId;
       }
-      const hvm = await HappViewModel.new(this, appProxy, hvmDef);
+      const hvm = await HappViewModel.new(this, appProxy, hvmDef, false);
       await hvm.authorizeAllZomeCalls(appProxy.adminWs);
 
       this.hvms.push([appProxy, hvm]);
