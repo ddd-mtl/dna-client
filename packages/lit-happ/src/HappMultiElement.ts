@@ -42,7 +42,7 @@ export class HappMultiElement extends LitElement {
   }
 
   /** */
-  async hvmConstructed(): Promise<void> {}
+  async hvmsConstructed(): Promise<void> {}
   /** */
   async perspectiveInitializedOffline(): Promise<void> {}
   /** */
@@ -69,10 +69,9 @@ export class HappMultiElement extends LitElement {
       await hvm.authorizeAllZomeCalls(appProxy.adminWs);
 
       this.hvms.push([appProxy, hvm]);
-
-      await this.hvmConstructed();
-      await this.initializePerspective();
     }
+    await this.hvmsConstructed();
+    await this.initializePerspective();
   }
 
 
